@@ -10,6 +10,8 @@ public interface IQuestionService {
 
     List<Optional<QuestionDTO>> getAllQuestions();
 
+    List<Optional<QuestionDTO>> getAllQuestionsByQuizId(int quizId);
+
     Optional<QuestionDTO> getQuestionById(int id);
 
     Optional<QuestionDTO> updateQuestion(int id, QuestionDTO dto);

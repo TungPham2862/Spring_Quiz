@@ -12,11 +12,11 @@ public interface IAnswerService {
 
     Optional<AnswerDTO> getAnswerById(int id);
 
+    List<Optional<AnswerDTO>> getAnswersByQuestionId(int questionId);
+
     Optional<AnswerDTO> updateAnswer(int id, AnswerDTO dto);
 
     void deleteAnswerById(int id);
-
-    List<Optional<AnswerDTO>> getAllAnswersByQuestionId(int questionId);
 
     void populate();
 }

@@ -40,6 +40,14 @@ public class QuestionService implements IQuestionService {
     }
 
     @Override
+    public List<Optional<QuestionDTO>> getAllQuestionsByQuizId(int quizId) {
+        return questionRepository.findAllByQuizzes_QuizId(quizId)
+                .stream()
+                .map(questionBuilder::build)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<QuestionDTO> getQuestionById(int id) {
         return questionRepository.findById(id)
                 .map(questionBuilder::build)

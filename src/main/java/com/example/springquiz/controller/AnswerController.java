@@ -38,7 +38,7 @@ public class AnswerController {
 
     @GetMapping("/question/{questionId}")
     public ResponseEntity<?> findAnswersByQuestionId(@PathVariable int questionId) {
-        return ResponseEntity.ok(answerService.getAllAnswersByQuestionId(questionId));
+        return ResponseEntity.ok(answerService.getAnswersByQuestionId(questionId));
     }
 
     @GetMapping("/{id}")
@@ -46,7 +46,10 @@ public class AnswerController {
         return ResponseEntity.ok(answerService.getAnswerById(id));
     }
 
-
+//    @GetMapping("/{question_id}")
+//    public ResponseEntity<?> findAnswersByQuestionId(@PathVariable int question_id) {
+//        return ResponseEntity.ok(answerService.getAllAnswersByQuestionId(question_id));
+//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAnswerById(@PathVariable int id, @Valid @RequestBody AnswerDTO dto) {
