@@ -1,6 +1,6 @@
-# Project Title
+# SPRING-QUIZ
 
-A brief description of your project, what it does, and its purpose.
+Simple app to demo spring boot with hibernate
 
 ## Table of Contents
 
@@ -13,4 +13,4 @@ A brief description of your project, what it does, and its purpose.
 
 ## Features
 
-- CRUD of entities.
+- Simple App with basic features(Login/SignUp) and other feature such as Manage Quiz, Question Bank and its answer
