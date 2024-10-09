@@ -6,15 +6,15 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IAnswerService {
-    Long createNewAnswer(AnswerDTO dto);
+    int createNewAnswer(AnswerDTO dto);
 
     List<Optional<AnswerDTO>> getAllAnswers();
 
-    Optional<AnswerDTO> getAnswerById(Long id);
+    Optional<AnswerDTO> getAnswerById(int id);
 
-    Optional<AnswerDTO> updateAnswer(Long id, AnswerDTO dto);
+    Optional<AnswerDTO> updateAnswer(int id, AnswerDTO dto);
 
-    void deleteAnswerById(Long id);
+    void deleteAnswerById(int id);
 
     void populate();
 }

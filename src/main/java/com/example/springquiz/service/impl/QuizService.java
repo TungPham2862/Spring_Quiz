@@ -3,16 +3,19 @@ package com.example.springquiz.service.impl;
 import com.example.springquiz.builder.QuizBuilder;
 import com.example.springquiz.exception.CustomizedNotFoundException;
 import com.example.springquiz.model.domain.Quiz;
-import com.example.springquiz.model.dto.AnswerDTO;
 import com.example.springquiz.model.dto.QuizDTO;
 import com.example.springquiz.repository.IQuizRepository;
 import com.example.springquiz.service.IQuizService;
+import com.github.javafaker.Faker;
 import lombok.AllArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Service
@@ -22,7 +25,7 @@ public class QuizService implements IQuizService {
     private final QuizBuilder quizBuilder;
 
     @Override
-    public Long createNewQuiz(QuizDTO dto) {
+    public int createNewQuiz(QuizDTO dto) {
         return Stream.of(dto)
                 .map(quizBuilder::build)
                 .map(quizRepository::save)
@@ -40,14 +43,14 @@ public class QuizService implements IQuizService {
     }
 
     @Override
-    public Optional<QuizDTO> getQuizById(Long id) {
+    public Optional<QuizDTO> getQuizById(int id) {
         return quizRepository.findById(id)
                 .map(quizBuilder::build)
                 .orElseThrow(() -> new CustomizedNotFoundException(String.format("Quiz with id %s not found", id)));
     }
 
     @Override
-    public Optional<QuizDTO> updateQuiz(Long id, QuizDTO dto) {
+    public Optional<QuizDTO> updateQuiz(int id, QuizDTO dto) {
         return quizRepository.findById(id)
                 .map(model -> quizBuilder.build(dto,model))
                 .map(quizRepository::save)
@@ -56,12 +59,24 @@ public class QuizService implements IQuizService {
     }
 
     @Override
-    public void deleteQuizById(Long id) {
+    public void deleteQuizById(int id) {
         quizRepository.deleteById(id);
     }
 
     @Override
     public void populate() {
+        val faker = new Faker();
+        IntStream.range(0, 100).forEach(i -> {
+            Quiz quiz = Quiz.builder()
+                    .quiz_name(faker.app().name())
+                    .quiz_type(faker.app().version())
+                    .description(faker.shakespeare().asYouLikeItQuote())
+                    .duration(Timestamp.valueOf(faker.app().version()))
+                    .date(faker.date().birthday())
+                    .status(faker.app().name())
+                    .build();
 
+            quizRepository.save(quiz);
+        });
     }
 }

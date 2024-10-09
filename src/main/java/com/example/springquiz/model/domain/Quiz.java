@@ -1,7 +1,7 @@
 package com.example.springquiz.model.domain;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,12 +12,11 @@ import java.util.Set;
 @Data
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "quiz")
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long quiz_id;
+    private int quiz_id;
     private String quiz_name;
     private String description;
     private String quiz_type;
@@ -33,4 +32,15 @@ public class Quiz {
             inverseJoinColumns = @JoinColumn(name="question_id")
     )
     private Set<Question> questions;
+
+    @Builder
+    public Quiz(String status, Timestamp duration, Date date, String quiz_type, String description, String quiz_name, int quiz_id) {
+        this.status = status;
+        this.duration = duration;
+        this.date = date;
+        this.quiz_type = quiz_type;
+        this.description = description;
+        this.quiz_name = quiz_name;
+        this.quiz_id = quiz_id;
+    }
 }

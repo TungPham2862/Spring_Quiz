@@ -13,16 +13,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("question")
+@RequestMapping("/questions")
 public class QuestionController {
 
     QuestionService questionService;
 
     @PostMapping
     public ResponseEntity<?> createQuestion(@Valid @RequestBody QuestionDTO dto, UriComponentsBuilder uriComponentsBuilder) {
-        Long question_id = questionService.createNewQuestion(dto);
+        int question_id = questionService.createNewQuestion(dto);
         UriComponents uriComponents = uriComponentsBuilder
-                .path("/question/{id}")
+                .path("/questions/{id}")
                 .buildAndExpand(question_id);
 
         HttpHeaders headers = new HttpHeaders();
@@ -37,18 +37,18 @@ public class QuestionController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findQuestionById(@PathVariable Long id) {
+    public ResponseEntity<?> findQuestionById(@PathVariable int id) {
         return ResponseEntity.ok(questionService.getQuestionById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateQuestionById(@PathVariable Long id, @Valid @RequestBody QuestionDTO dto) {
+    public ResponseEntity<?> updateQuestionById(@PathVariable int id, @Valid @RequestBody QuestionDTO dto) {
         questionService.updateQuestion(id, dto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteQuestionById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteQuestionById(@PathVariable int id) {
         questionService.deleteQuestionById(id);
         return ResponseEntity.ok().build();
     }

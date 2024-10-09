@@ -13,16 +13,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/answer")
+@RequestMapping("/answers")
 public class AnswerController {
 
     AnswerService answerService;
 
     @PostMapping
     public ResponseEntity<?> createAnswer(@Valid @RequestBody AnswerDTO dto, UriComponentsBuilder uriComponentsBuilder) {
-        Long answer_id = answerService.createNewAnswer(dto);
+        int answer_id = answerService.createNewAnswer(dto);
         UriComponents uriComponents = uriComponentsBuilder
-                .path("/answer/{id}")
+                .path("/answers/{id}")
                 .buildAndExpand(answer_id);
 
         HttpHeaders headers = new HttpHeaders();
@@ -37,18 +37,23 @@ public class AnswerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findAnswerById(@PathVariable Long id) {
+    public ResponseEntity<?> findAnswerById(@PathVariable int id) {
         return ResponseEntity.ok(answerService.getAnswerById(id));
     }
 
+//    @GetMapping("/{question_id}")
+//    public ResponseEntity<?> findAnswersByQuestionId(@PathVariable int question_id) {
+//        return ResponseEntity.ok(answerService.getAllAnswersByQuestionId(question_id));
+//    }
+
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateAnswerById(@PathVariable Long id, @Valid @RequestBody AnswerDTO dto) {
+    public ResponseEntity<?> updateAnswerById(@PathVariable int id, @Valid @RequestBody AnswerDTO dto) {
         answerService.updateAnswer(id, dto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAnswerById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteAnswerById(@PathVariable int id) {
         answerService.deleteAnswerById(id);
         return ResponseEntity.ok().build();
     }

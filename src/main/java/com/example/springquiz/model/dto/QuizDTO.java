@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.sql.Time;
 import java.util.Date;
 import java.util.Set;
 
@@ -24,8 +24,7 @@ public class QuizDTO {
 
     private Date date;
 
-    @NotEmpty
-    private Timestamp duration;
+    private Time duration;
 
     @NotEmpty
     private String status;

@@ -1,6 +1,5 @@
 package com.example.springquiz.controller;
 
-import com.example.springquiz.model.dto.AnswerDTO;
 import com.example.springquiz.model.dto.QuizDTO;
 import com.example.springquiz.service.impl.QuizService;
 import jakarta.validation.Valid;
@@ -14,15 +13,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("quiz")
+@RequestMapping("/quizzes")
 public class QuizController {
     QuizService quizService;
 
     @PostMapping
     public ResponseEntity<?> createQuestion(@Valid @RequestBody QuizDTO dto, UriComponentsBuilder uriComponentsBuilder) {
-        Long quiz_id = quizService.createNewQuiz(dto);
+        int quiz_id = quizService.createNewQuiz(dto);
         UriComponents uriComponents = uriComponentsBuilder
-                .path("/quiz/{id}")
+                .path("/quizzes/{id}")
                 .buildAndExpand(quiz_id);
 
         HttpHeaders headers = new HttpHeaders();
@@ -31,24 +30,24 @@ public class QuizController {
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<?> getAllQuizzes() {
         return ResponseEntity.ok(quizService.getAllQuizzes());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> findQuizById(@PathVariable Long id) {
+    public ResponseEntity<?> findQuizById(@PathVariable int id) {
         return ResponseEntity.ok(quizService.getQuizById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateQuizById(@PathVariable Long id, @Valid @RequestBody QuizDTO dto) {
+    public ResponseEntity<?> updateQuizById(@PathVariable int id, @Valid @RequestBody QuizDTO dto) {
         quizService.updateQuiz(id, dto);
         return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteAnswerById(@PathVariable Long id) {
+    public ResponseEntity<?> deleteAnswerById(@PathVariable int id) {
         quizService.deleteQuizById(id);
         return ResponseEntity.ok().build();
     }

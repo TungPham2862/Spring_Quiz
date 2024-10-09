@@ -22,7 +22,7 @@ public class QuestionService implements IQuestionService {
 
 
     @Override
-    public Long createNewQuestion(QuestionDTO dto) {
+    public int createNewQuestion(QuestionDTO dto) {
         return Stream.of(dto)
                 .map(questionBuilder::build)
                 .map(questionRepository::save)
@@ -40,14 +40,14 @@ public class QuestionService implements IQuestionService {
     }
 
     @Override
-    public Optional<QuestionDTO> getQuestionById(Long id) {
+    public Optional<QuestionDTO> getQuestionById(int id) {
         return questionRepository.findById(id)
                 .map(questionBuilder::build)
                 .orElseThrow(() -> new CustomizedNotFoundException(String.format("No such Question for id '%s'", id)));
     }
 
     @Override
-    public Optional<QuestionDTO> updateQuestion(Long id, QuestionDTO dto) {
+    public Optional<QuestionDTO> updateQuestion(int id, QuestionDTO dto) {
         return questionRepository.findById(id)
                 .map(model -> questionBuilder.build(dto, model))
                 .map(questionRepository::save)
@@ -57,7 +57,7 @@ public class QuestionService implements IQuestionService {
     }
 
     @Override
-    public void deleteQuestionById(Long id) {
+    public void deleteQuestionById(int id) {
         questionRepository.deleteById(id);
     }
 
