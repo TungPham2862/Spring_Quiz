@@ -18,8 +18,8 @@ public class SwaggerConfig {
         server.setDescription("Development");
 
         Contact myContact = new Contact();
-        myContact.setName("Jane Doe");
-        myContact.setEmail("your.email@gmail.com");
+        myContact.setName("TungPham");
+        myContact.setEmail("tungpham2862@gmail.com");
 
         Info information = new Info()
                 .title("Employee Management System API")

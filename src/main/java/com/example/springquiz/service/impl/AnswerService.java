@@ -22,12 +22,8 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public int createNewAnswer(AnswerDTO dto) {
-        return Stream.of(dto)
-                .map(answerBuilder::build)
-                .map(answerRepository::save)
-                .map(Answer::getAnswerId)
-                .findFirst()
-                .get();
+        Answer answer = answerBuilder.build(dto);
+        return answerRepository.save(answer).getAnswerId();
     }
 
     @Override
@@ -46,6 +42,14 @@ public class AnswerService implements IAnswerService {
     }
 
     @Override
+    public List<Optional<AnswerDTO>> getAnswersByQuestionId(int questionId) {
+        return answerRepository.findByQuestion_QuestionId(questionId)
+                .stream()
+                .map(answerBuilder::build)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<AnswerDTO> updateAnswer(int id, AnswerDTO dto) {
         return answerRepository.findById(id)
                 .map(model -> answerBuilder.build(dto, model))
@@ -59,13 +63,7 @@ public class AnswerService implements IAnswerService {
         answerRepository.deleteById(id);
     }
 
-    @Override
-    public List<Optional<AnswerDTO>> getAllAnswersByQuestionId(int questionId) {
-        return answerRepository.findByQuestion_QuestionId(questionId)
-                .stream()
-                .map(answerBuilder::build)
-                .collect(Collectors.toList());
-    }
+
 
 
     @Override

@@ -18,6 +18,6 @@ public class Answer {
     private String status;
 
     @ManyToOne()
-    @JoinColumn(name = "questionId", nullable = false)
+    @JoinColumn(name = "question_id", nullable = false)
     private Question question;
 }
