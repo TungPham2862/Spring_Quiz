@@ -20,10 +20,10 @@ public class QuestionController {
 
     @PostMapping
     public ResponseEntity<?> createQuestion(@Valid @RequestBody QuestionDTO dto, UriComponentsBuilder uriComponentsBuilder) {
-        int question_id = questionService.createNewQuestion(dto);
+        int questionId = questionService.createNewQuestion(dto);
         UriComponents uriComponents = uriComponentsBuilder
                 .path("/questions/{id}")
-                .buildAndExpand(question_id);
+                .buildAndExpand(questionId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponents.toUri());

@@ -1,6 +1,7 @@
 package com.example.springquiz.config;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,7 +13,9 @@ public class Config {
         ModelMapper modelMapper = new ModelMapper();
 
         // ignore null attributes on the source object on copying
-        modelMapper.getConfiguration().setSkipNullEnabled(true);
+        modelMapper.getConfiguration()
+                .setSkipNullEnabled(true)
+                .setMatchingStrategy(MatchingStrategies.STANDARD);
         return modelMapper;
     }
 }

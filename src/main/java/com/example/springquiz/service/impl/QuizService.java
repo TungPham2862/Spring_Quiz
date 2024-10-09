@@ -29,7 +29,7 @@ public class QuizService implements IQuizService {
         return Stream.of(dto)
                 .map(quizBuilder::build)
                 .map(quizRepository::save)
-                .map(Quiz::getQuiz_id)
+                .map(Quiz::getQuizId)
                 .findFirst()
                 .get();
     }
@@ -65,18 +65,5 @@ public class QuizService implements IQuizService {
 
     @Override
     public void populate() {
-        val faker = new Faker();
-        IntStream.range(0, 100).forEach(i -> {
-            Quiz quiz = Quiz.builder()
-                    .quiz_name(faker.app().name())
-                    .quiz_type(faker.app().version())
-                    .description(faker.shakespeare().asYouLikeItQuote())
-                    .duration(Timestamp.valueOf(faker.app().version()))
-                    .date(faker.date().birthday())
-                    .status(faker.app().name())
-                    .build();
-
-            quizRepository.save(quiz);
-        });
     }
 }

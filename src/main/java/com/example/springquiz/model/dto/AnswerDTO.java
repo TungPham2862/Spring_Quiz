@@ -1,11 +1,14 @@
 package com.example.springquiz.model.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class AnswerDTO {
 
     @NotEmpty
@@ -14,6 +17,8 @@ public class AnswerDTO {
     @NotEmpty
     private String status;
 
-    @NotEmpty
-    private String question_id;
+    @NotNull
+    private Integer questionId;
+
+
 }

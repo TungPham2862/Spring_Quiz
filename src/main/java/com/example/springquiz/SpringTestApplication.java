@@ -10,10 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = "com.example.springquiz")
 @SpringBootApplication(scanBasePackages = "com.example.springquiz")
 public class SpringTestApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(SpringTestApplication.class, args);
     }
-
-
 }

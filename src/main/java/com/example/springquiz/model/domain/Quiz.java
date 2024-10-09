@@ -16,10 +16,10 @@ import java.util.Set;
 public class Quiz {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int quiz_id;
-    private String quiz_name;
+    private int quizId;
+    private String quizName;
     private String description;
-    private String quiz_type;
+    private String quizType;
     private Date date;
     private Timestamp duration;
     private String status;
@@ -28,19 +28,19 @@ public class Quiz {
     @ManyToMany
     @JoinTable(
             name="quiz_question",
-            joinColumns = @JoinColumn(name="quiz_id"),
-            inverseJoinColumns = @JoinColumn(name="question_id")
+            joinColumns = @JoinColumn(name="quizId"),
+            inverseJoinColumns = @JoinColumn(name="questionId")
     )
     private Set<Question> questions;
 
     @Builder
-    public Quiz(String status, Timestamp duration, Date date, String quiz_type, String description, String quiz_name, int quiz_id) {
+    public Quiz(String status, Timestamp duration, Date date, String quizType, String description, String quizName, int quizId) {
         this.status = status;
         this.duration = duration;
         this.date = date;
-        this.quiz_type = quiz_type;
+        this.quizType = quizType;
         this.description = description;
-        this.quiz_name = quiz_name;
-        this.quiz_id = quiz_id;
+        this.quizName = quizName;
+        this.quizId = quizId;
     }
 }

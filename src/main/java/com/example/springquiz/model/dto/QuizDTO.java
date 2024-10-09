@@ -2,6 +2,7 @@ package com.example.springquiz.model.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,16 +12,17 @@ import java.util.Set;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class QuizDTO {
 
     @NotEmpty
     @Size(min = 4, max = 30)
-    private String quiz_name;
+    private String quizName;
 
     private String description;
 
     @NotEmpty
-    private String quiz_type;
+    private String quizType;
 
     private Date date;
 
@@ -29,6 +31,6 @@ public class QuizDTO {
     @NotEmpty
     private String status;
 
-    private Set<Integer> question_ids;
+    private Set<Integer> questionIds;
 
 }

@@ -22,8 +22,12 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public int createNewAnswer(AnswerDTO dto) {
-        Answer answer = answerBuilder.build(dto);
-        return answerRepository.save(answer).getAnswer_id();
+        return Stream.of(dto)
+                .map(answerBuilder::build)
+                .map(answerRepository::save)
+                .map(Answer::getAnswerId)
+                .findFirst()
+                .get();
     }
 
     @Override
@@ -53,6 +57,14 @@ public class AnswerService implements IAnswerService {
     @Override
     public void deleteAnswerById(int id) {
         answerRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Optional<AnswerDTO>> getAllAnswersByQuestionId(int questionId) {
+        return answerRepository.findByQuestion_QuestionId(questionId)
+                .stream()
+                .map(answerBuilder::build)
+                .collect(Collectors.toList());
     }
 
 

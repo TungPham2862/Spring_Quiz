@@ -19,10 +19,10 @@ public class QuizController {
 
     @PostMapping
     public ResponseEntity<?> createQuestion(@Valid @RequestBody QuizDTO dto, UriComponentsBuilder uriComponentsBuilder) {
-        int quiz_id = quizService.createNewQuiz(dto);
+        int quizId = quizService.createNewQuiz(dto);
         UriComponents uriComponents = uriComponentsBuilder
                 .path("/quizzes/{id}")
-                .buildAndExpand(quiz_id);
+                .buildAndExpand(quizId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponents.toUri());

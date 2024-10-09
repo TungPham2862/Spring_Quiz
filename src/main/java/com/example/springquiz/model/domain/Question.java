@@ -16,14 +16,14 @@ import java.util.Set;
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int question_id;
+    private int questionId;
     private String question;
-    private String question_type;
+    private String questionType;
     private String status;
 
-    @ManyToMany(mappedBy = "questions", cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "questions", cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     private Set<Quiz> quizzes;
 
-    @OneToMany(mappedBy = "question")
+    @OneToMany(mappedBy = "question",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Answer> answers;
 }

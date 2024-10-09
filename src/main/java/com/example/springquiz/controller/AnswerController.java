@@ -20,10 +20,10 @@ public class AnswerController {
 
     @PostMapping
     public ResponseEntity<?> createAnswer(@Valid @RequestBody AnswerDTO dto, UriComponentsBuilder uriComponentsBuilder) {
-        int answer_id = answerService.createNewAnswer(dto);
+        int answerId = answerService.createNewAnswer(dto);
         UriComponents uriComponents = uriComponentsBuilder
                 .path("/answers/{id}")
-                .buildAndExpand(answer_id);
+                .buildAndExpand(answerId);
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponents.toUri());
@@ -36,15 +36,17 @@ public class AnswerController {
         return ResponseEntity.ok(answerService.getAllAnswers());
     }
 
+    @GetMapping("/question/{questionId}")
+    public ResponseEntity<?> findAnswersByQuestionId(@PathVariable int questionId) {
+        return ResponseEntity.ok(answerService.getAllAnswersByQuestionId(questionId));
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findAnswerById(@PathVariable int id) {
         return ResponseEntity.ok(answerService.getAnswerById(id));
     }
 
-//    @GetMapping("/{question_id}")
-//    public ResponseEntity<?> findAnswersByQuestionId(@PathVariable int question_id) {
-//        return ResponseEntity.ok(answerService.getAllAnswersByQuestionId(question_id));
-//    }
+
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAnswerById(@PathVariable int id, @Valid @RequestBody AnswerDTO dto) {

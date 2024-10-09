@@ -16,6 +16,8 @@ public interface IAnswerService {
 
     void deleteAnswerById(int id);
 
+    List<Optional<AnswerDTO>> getAllAnswersByQuestionId(int questionId);
+
     void populate();
 }
 

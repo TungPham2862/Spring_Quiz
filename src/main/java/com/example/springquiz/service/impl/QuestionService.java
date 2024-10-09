@@ -26,7 +26,7 @@ public class QuestionService implements IQuestionService {
         return Stream.of(dto)
                 .map(questionBuilder::build)
                 .map(questionRepository::save)
-                .map(Question::getQuestion_id)
+                .map(Question::getQuestionId)
                 .findFirst()
                 .get();
     }
