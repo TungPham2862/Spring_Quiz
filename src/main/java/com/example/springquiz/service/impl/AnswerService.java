@@ -22,12 +22,8 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public int createNewAnswer(AnswerDTO dto) {
-        return Stream.of(dto)
-                .map(answerBuilder::build)
-                .map(answerRepository::save)
-                .map(Answer::getAnswerId)
-                .findFirst()
-                .get();
+        Answer answer = answerBuilder.build(dto);
+        return answerRepository.save(answer).getAnswerId();
     }
 
     @Override

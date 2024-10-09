@@ -15,7 +15,7 @@ public class Config {
         // ignore null attributes on the source object on copying
         modelMapper.getConfiguration()
                 .setSkipNullEnabled(true)
-                .setMatchingStrategy(MatchingStrategies.STANDARD);
+                .setMatchingStrategy(MatchingStrategies.STRICT);
         return modelMapper;
     }
 }
