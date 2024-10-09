@@ -27,13 +27,17 @@ public class QuestionController {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(uriComponents.toUri());
-
         return new ResponseEntity<>(headers, HttpStatus.CREATED);
     }
 
     @GetMapping
     public ResponseEntity<?> getAllQuestions() {
         return ResponseEntity.ok(questionService.getAllQuestions());
+    }
+
+    @GetMapping("/quiz/{quizId}")
+    public ResponseEntity<?> getQuestionsByQuizId(@PathVariable int quizId) {
+        return ResponseEntity.ok(questionService.getAllQuestionsByQuizId(quizId));
     }
 
     @GetMapping("/{id}")
