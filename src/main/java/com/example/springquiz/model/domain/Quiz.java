@@ -25,7 +25,7 @@ public class Quiz {
     private String status;
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="quiz_question",
             joinColumns = @JoinColumn(name="quizId"),
