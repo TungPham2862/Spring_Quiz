@@ -31,6 +31,6 @@ public class QuizDTO {
     @NotEmpty
     private String status;
 
-    private Set<Integer> questionIds;
+    private Set<QuestionDTO> questions;
 
 }
