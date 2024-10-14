@@ -2,6 +2,7 @@ package com.example.springquiz.builder;
 
 import com.example.springquiz.model.domain.Question;
 import com.example.springquiz.model.domain.Quiz;
+import com.example.springquiz.model.dto.AccountDTO;
 import com.example.springquiz.model.dto.QuestionDTO;
 import com.example.springquiz.model.dto.QuizDTO;
 import com.example.springquiz.repository.IQuestionRepository;
@@ -26,17 +27,22 @@ public class QuizBuilder {
     }
 
     public Optional<QuizDTO> build(Quiz domain) {
-        Set<QuestionDTO> questions = questionRepository.findAllByQuizzes_QuizId(domain.getQuizId())
-                .stream().map(question -> modelMapper.map(question, QuestionDTO.class))
+        Set<QuestionDTO> questions = questionRepository
+                .findAllByQuizzes_QuizId(domain.getQuizId())
+                .stream()
+                .map(question -> modelMapper.map(question, QuestionDTO.class))
                 .collect(Collectors.toSet());
         QuizDTO dto = modelMapper.map(domain, QuizDTO.class);
         dto.setQuestions(questions);
+        if(domain.getAccount()!=null) dto.setAccountId(domain.getAccount().getAccountId());
         return Optional.of(dto);
     }
 
     public Quiz build(QuizDTO dto, Quiz domain) {
-        Set<Question> questions = questionRepository.findAllByQuizzes_QuizId(domain.getQuizId())
-                .stream().map(question -> modelMapper.map(question, Question.class))
+        Set<Question> questions = questionRepository
+                .findAllByQuizzes_QuizId(domain.getQuizId())
+                .stream()
+                .map(question -> modelMapper.map(question, Question.class))
                 .collect(Collectors.toSet());
         domain.setQuestions(questions);
         modelMapper.map(dto, domain);

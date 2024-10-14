@@ -1,15 +1,14 @@
 package com.example.springquiz.model.domain;
 
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 @Table(name = "quiz")
@@ -28,19 +27,23 @@ public class Quiz {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name="quiz_question",
-            joinColumns = @JoinColumn(name="quizId"),
-            inverseJoinColumns = @JoinColumn(name="questionId")
+            joinColumns = @JoinColumn(name="quiz_id"),
+            inverseJoinColumns = @JoinColumn(name="question_id")
     )
     private Set<Question> questions;
 
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "account_id", nullable = false)
+    private Account account;
+
     @Builder
-    public Quiz(String status, Timestamp duration, Date date, String quizType, String description, String quizName, int quizId) {
-        this.status = status;
-        this.duration = duration;
-        this.date = date;
-        this.quizType = quizType;
-        this.description = description;
-        this.quizName = quizName;
+    public Quiz(int quizId, String quizName, String description, String quizType, Date date, Timestamp duration, String status) {
         this.quizId = quizId;
+        this.quizName = quizName;
+        this.description = description;
+        this.quizType = quizType;
+        this.date = date;
+        this.duration = duration;
+        this.status = status;
     }
 }

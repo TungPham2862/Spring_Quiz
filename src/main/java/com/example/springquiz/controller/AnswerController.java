@@ -46,10 +46,6 @@ public class AnswerController {
         return ResponseEntity.ok(answerService.getAnswerById(id));
     }
 
-//    @GetMapping("/{question_id}")
-//    public ResponseEntity<?> findAnswersByQuestionId(@PathVariable int question_id) {
-//        return ResponseEntity.ok(answerService.getAllAnswersByQuestionId(question_id));
-//    }
 
     @PutMapping("/{id}")
     public ResponseEntity<?> updateAnswerById(@PathVariable int id, @Valid @RequestBody AnswerDTO dto) {
