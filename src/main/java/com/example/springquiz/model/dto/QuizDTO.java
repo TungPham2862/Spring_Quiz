@@ -31,6 +31,8 @@ public class QuizDTO {
     @NotEmpty
     private String status;
 
+    private Integer accountId;
+
     private Set<QuestionDTO> questions;
 
 }
