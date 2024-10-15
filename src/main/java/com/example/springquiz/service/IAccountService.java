@@ -1,7 +1,6 @@
 package com.example.springquiz.service;
 
 import com.example.springquiz.model.dto.AccountDTO;
-import com.example.springquiz.model.dto.AuthenDTO;
 
 import java.util.List;
 import java.util.Optional;

@@ -1,7 +1,8 @@
 package com.example.springquiz.service.impl;
 
 import com.example.springquiz.model.domain.Account;
-import com.example.springquiz.model.dto.AuthenDTO;
+import com.example.springquiz.model.dto.AuthenRequestDTO;
+import com.example.springquiz.model.dto.AuthenResponseDTO;
 import com.example.springquiz.model.dto.IntrospectDTO;
 import com.example.springquiz.repository.IAccountRepository;
 import com.nimbusds.jose.*;
@@ -11,7 +12,6 @@ import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.SignedJWT;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,16 +28,16 @@ public class AuthenticationService {
     private final IAccountRepository accountRepository;
     private final String encryptionKey = "h61e6r+A3LQH4PdQWVnQxwMQ2W8CGIv+kaPl2kyB0dr9XcpMOVYCCBMGS6eD0Oh";
 
-    public AuthenDTO authenticate(String username, String password) {
-        Optional<Account> account = accountRepository.findByUsername(username);
+    public AuthenResponseDTO authenticate(AuthenRequestDTO authenRequestDTO) {
+        Optional<Account> account = accountRepository.findByUsername(authenRequestDTO.getUsername());
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
-        boolean result = account.isPresent() && passwordEncoder.matches(password, account.get().getPassword());
+        boolean result = account.isPresent() && passwordEncoder.matches(authenRequestDTO.getPassword(), account.get().getPassword());
         if (!result) throw new RuntimeException("Invalid username or password");
-        String token = generateToken(username);
-        return AuthenDTO.builder()
+        String token = generateToken(account.get().getUsername());
+        return AuthenResponseDTO.builder()
                 .token(token)
-                .authenticated(result)
+                .authenticated(true)
                 .build();
     }
 
@@ -49,7 +49,7 @@ public class AuthenticationService {
                 .issuer("admin1")
                 .issueTime(new Date())
                 .expirationTime(new Date(System.currentTimeMillis()+ 1000 * 60 * 60))
-                .claim("roleClaim",account.getRole().getRoleName())
+                .claim("scope",account.getRole().getRoleName())
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
         JWSObject jwsObject = new JWSObject(header,payload);

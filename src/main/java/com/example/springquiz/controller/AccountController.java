@@ -1,7 +1,8 @@
 package com.example.springquiz.controller;
 
 import com.example.springquiz.model.dto.AccountDTO;
-import com.example.springquiz.model.dto.AuthenDTO;
+import com.example.springquiz.model.dto.AuthenRequestDTO;
+import com.example.springquiz.model.dto.AuthenResponseDTO;
 import com.example.springquiz.model.dto.IntrospectDTO;
 import com.example.springquiz.service.impl.AccountService;
 import com.example.springquiz.service.impl.AuthenticationService;
@@ -38,8 +39,8 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestParam String username, @RequestParam String password, UriComponentsBuilder uriComponentsBuilder) {
-        AuthenDTO result = authenticationService.authenticate(username,password);
+    public ResponseEntity<?> authenticate(@RequestBody AuthenRequestDTO authenRequestDTO) {
+        AuthenResponseDTO result = authenticationService.authenticate(authenRequestDTO);
         return ResponseEntity.ok(result);
     }
 

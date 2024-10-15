@@ -1,5 +1,6 @@
 package com.example.springquiz.model.domain;
 
+import com.example.springquiz.Enum.RoleName;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,7 +15,9 @@ public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int roleId;
-    private String roleName;
+    
+    @Enumerated(EnumType.STRING)
+    private RoleName roleName;
     private String status;
 
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL)
