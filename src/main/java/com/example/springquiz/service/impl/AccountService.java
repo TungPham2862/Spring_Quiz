@@ -11,6 +11,7 @@ import com.example.springquiz.repository.IRoleRepository;
 import com.example.springquiz.service.IAccountService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,6 +42,9 @@ public class AccountService implements IAccountService {
 
     @Override
     public List<Optional<AccountDTO>> getAllAccounts() {
+//        var authentication = SecurityContextHolder.getContext().getAuthentication();
+//        log.info("Username : {}", authentication.getName());
+//        log.info("Authority : {}", authentication.getAuthorities());
         return accountRepository.findAll()
                 .stream()
                 .map(accountBuilder::build)
