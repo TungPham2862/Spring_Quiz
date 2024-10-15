@@ -1,24 +1,21 @@
 package com.example.springquiz.service.impl;
 
+import com.example.springquiz.Enum.RoleName;
 import com.example.springquiz.builder.AccountBuilder;
 import com.example.springquiz.exception.CustomizedNotFoundException;
 import com.example.springquiz.model.domain.Account;
 import com.example.springquiz.model.domain.Role;
 import com.example.springquiz.model.dto.AccountDTO;
-import com.example.springquiz.model.dto.AuthenDTO;
 import com.example.springquiz.repository.IAccountRepository;
 import com.example.springquiz.repository.IRoleRepository;
 import com.example.springquiz.service.IAccountService;
-import com.nimbusds.jose.*;
-import com.nimbusds.jose.crypto.MACSigner;
-import com.nimbusds.jwt.JWTClaimsSet;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -30,12 +27,12 @@ public class AccountService implements IAccountService {
 
     private final IAccountRepository accountRepository;
     private final AccountBuilder accountBuilder;
-
     private final IRoleRepository roleRepository;
+
     @Override
     public int createNewAccount(AccountDTO dto) {
-        Role role = roleRepository.findByRoleName(dto.getRoleName());
         Account account = accountBuilder.build(dto);
+        Role role = roleRepository.findByRoleName(RoleName.User.name());
         account.setRole(role);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         account.setPassword(passwordEncoder.encode(dto.getPassword()));
@@ -45,6 +42,9 @@ public class AccountService implements IAccountService {
 
     @Override
     public List<Optional<AccountDTO>> getAllAccounts() {
+//        var authentication = SecurityContextHolder.getContext().getAuthentication();
+//        log.info("Username : {}", authentication.getName());
+//        log.info("Authority : {}", authentication.getAuthorities());
         return accountRepository.findAll()
                 .stream()
                 .map(accountBuilder::build)
