@@ -1,6 +1,5 @@
 package com.example.springquiz.config;
 
-import com.example.springquiz.Enum.RoleName;
 import com.example.springquiz.model.domain.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -55,9 +54,9 @@ public class SecurityConfig {
                         authorizeRequests
                                 .requestMatchers(PUBLIC_ENDPOINTS).permitAll()
                                 .requestMatchers(WHITELIST).permitAll()
-                                .requestMatchers(AUTHOR_ADMIN).hasAuthority("SCOPE_" + RoleName.Admin.name())
-                                .requestMatchers(AUTHOR_USER).hasAuthority("SCOPE_" + RoleName.User.name())
-                                .requestMatchers(AUTHEN_ALLOW).hasAnyAuthority("SCOPE_" + RoleName.Admin.name(),"SCOPE_" +  RoleName.User.name())
+                                .requestMatchers(AUTHOR_ADMIN).hasAuthority("SCOPE_" + "Admin")
+                                .requestMatchers(AUTHOR_USER).hasAuthority("SCOPE_" + "User")
+                                .requestMatchers(AUTHEN_ALLOW).hasAnyAuthority("SCOPE_" + "Admin","SCOPE_" +  "User")
                                 .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable);

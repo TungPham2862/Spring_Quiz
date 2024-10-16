@@ -1,6 +1,5 @@
 package com.example.springquiz.service.impl;
 
-import com.example.springquiz.Enum.RoleName;
 import com.example.springquiz.builder.AccountBuilder;
 import com.example.springquiz.exception.CustomizedNotFoundException;
 import com.example.springquiz.model.domain.Account;
@@ -31,8 +30,8 @@ public class AccountService implements IAccountService {
 
     @Override
     public int createNewAccount(AccountDTO dto) {
+        Role role = roleRepository.findByRoleName(dto.getRoleName());
         Account account = accountBuilder.build(dto);
-        Role role = roleRepository.findByRoleName(RoleName.User.name());
         account.setRole(role);
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         account.setPassword(passwordEncoder.encode(dto.getPassword()));

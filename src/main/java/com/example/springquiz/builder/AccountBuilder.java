@@ -23,7 +23,7 @@ public class AccountBuilder {
 
     public Optional<AccountDTO> build(Account domain) {
         AccountDTO dto = modelMapper.map(domain, AccountDTO.class);
-        dto.setRoleName(domain.getRole().getRoleName().name());
+        dto.setRoleName(domain.getRole().getRoleName());
         return Optional.of(dto);
     }
 
