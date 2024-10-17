@@ -16,7 +16,6 @@ import java.util.Set;
 public class QuizDTO {
 
     @NotEmpty
-    @Size(min = 4, max = 30)
     private String quizName;
 
     private String description;
@@ -26,7 +25,7 @@ public class QuizDTO {
 
     private Date date;
 
-    private Time duration;
+    private int duration;
 
     @NotEmpty
     private String status;

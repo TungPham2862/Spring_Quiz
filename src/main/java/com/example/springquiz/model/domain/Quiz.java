@@ -20,7 +20,7 @@ public class Quiz {
     private String description;
     private String quizType;
     private Date date;
-    private Timestamp duration;
+    private int duration;
     private String status;
 
 
@@ -37,7 +37,7 @@ public class Quiz {
     private Account account;
 
     @Builder
-    public Quiz(int quizId, String quizName, String description, String quizType, Date date, Timestamp duration, String status) {
+    public Quiz(int quizId, String quizName, String description, String quizType, Date date, int duration, String status) {
         this.quizId = quizId;
         this.quizName = quizName;
         this.description = description;
