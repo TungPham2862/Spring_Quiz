@@ -1,6 +1,7 @@
 package com.example.springquiz.model.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 
 import java.util.Date;

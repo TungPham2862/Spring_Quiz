@@ -25,48 +25,23 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
+@RequestMapping("/accounts")
 public class AccountController {
 
     AccountService accountService;
     IAccountRepository accountRepository;
-    AuthenticationService authenticationService;
 
-    @PostMapping("/signup")
-    public ResponseEntity<?> createNewAccount(@Valid @RequestBody AccountDTO dto, UriComponentsBuilder uriComponentsBuilder) {
-        int accountId = accountService.createNewAccount(dto);
-        UriComponents uriComponents = uriComponentsBuilder
-                .path("/accounts/{id}")
-                .buildAndExpand(accountId);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setLocation(uriComponents.toUri());
-
-        return new ResponseEntity<>(headers, HttpStatus.CREATED);
-    }
-
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticate(@RequestBody AuthenRequestDTO authenRequestDTO) {
-        AuthenResponseDTO result = authenticationService.authenticate(authenRequestDTO);
-        return ResponseEntity.ok(result);
-    }
-
-    @PostMapping("/introspect")
-    public ResponseEntity<?> introspect(@RequestParam String token) throws ParseException, JOSEException {
-        IntrospectDTO result = authenticationService.introspect(token);
-        return ResponseEntity.ok(result);
-    }
-
-    @GetMapping("/accounts")
+    @GetMapping
     public ResponseEntity<?> getAllAccounts() {
         return ResponseEntity.ok(accountService.getAllAccounts());
     }
 
-    @GetMapping("/accounts/role/{roleId}")
+    @GetMapping("/role/{roleId}")
     public ResponseEntity<?> findAccountsByRoleId(@PathVariable int roleId) {
         return ResponseEntity.ok(accountService.getAccountsByRoleId(roleId));
     }
 
-    @GetMapping("/account/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findAccountById(@PathVariable int id) {
         return ResponseEntity.ok(accountService.getAccountById(id));
     }

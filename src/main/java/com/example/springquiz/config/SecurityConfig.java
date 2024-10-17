@@ -19,10 +19,8 @@ import java.net.http.HttpRequest;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final String [] PUBLIC_ENDPOINTS = {
-            "/login",
-            "/signup",
-            "/introspect"};
+    private final String[] PUBLIC_ENDPOINTS = {
+            "/auth/**"};
 
     private final String[] WHITELIST = {
             "/swagger-ui.html",
@@ -34,9 +32,9 @@ public class SecurityConfig {
             "/swagger-config"
     };
     private final String[] AUTHOR_ADMIN = {
-        "/accounts",
-        "/deactivate/",
-        "/accounts/role/"
+            "/accounts",
+            "/accounts/deactivate/",
+            "/accounts/role/**"
     };
     private final String[] AUTHOR_USER = {
             "/quizzes/**",
@@ -44,11 +42,13 @@ public class SecurityConfig {
             "/answers/**",
     };
     private final String[] AUTHEN_ALLOW = {
-            "/profile/**"
+            "/accounts/profile/**"
     };
-    private String secretKey ="h61e6r+A3LQH4PdQWVnQxwMQ2W8CGIv+kaPl2kyB0dr9XcpMOVYCCBMGS6eD0Oh";
+    private String secretKey = "h61e6r+A3LQH4PdQWVnQxwMQ2W8CGIv+kaPl2kyB0dr9XcpMOVYCCBMGS6eD0Oh";
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+
         httpSecurity
                 .authorizeHttpRequests(authorizeRequests ->
                         authorizeRequests
@@ -56,7 +56,7 @@ public class SecurityConfig {
                                 .requestMatchers(WHITELIST).permitAll()
                                 .requestMatchers(AUTHOR_ADMIN).hasAuthority("SCOPE_" + "Admin")
                                 .requestMatchers(AUTHOR_USER).hasAuthority("SCOPE_" + "User")
-                                .requestMatchers(AUTHEN_ALLOW).hasAnyAuthority("SCOPE_" + "Admin","SCOPE_" +  "User")
+                                .requestMatchers(AUTHEN_ALLOW).hasAnyAuthority("SCOPE_" + "Admin", "SCOPE_" + "User")
                                 .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable);
