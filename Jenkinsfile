@@ -17,6 +17,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'mvn clean package -DskipTests' // Biên dịch ứng dụng với Maven, bỏ qua kiểm thử
+                sh 'ls target'
             }
         }
 
