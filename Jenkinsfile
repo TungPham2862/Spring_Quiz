@@ -30,10 +30,10 @@ pipeline {
                         '''
                     }
                     // Xây dựng Docker image
-                    sh "docker build -t ${DOCKER_IMAGE_NAME} ."
+                    sh "docker build -t $DOCKER_IMAGE_NAME ."
 
                     // Đẩy Docker image lên Docker Hub
-                    sh "docker push ${DOCKER_IMAGE_NAME}"
+                    sh "docker push $DOCKER_IMAGE_NAME"
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline {
                     // Gửi yêu cầu tới API của Render để triển khai
                     sh """
                     curl -X POST https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys \
-                    -H "Authorization: Bearer ${RENDER_API_KEY}" \
+                    -H "Authorization: Bearer $RENDER_API_KEY" \
                     -H "Content-Type: application/json" \
                     -d '{"branch": "deploy"}'
                     """
