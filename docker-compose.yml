@@ -15,6 +15,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=123456
     networks:
       - springboot-mysql-network
+
   mysqldb:
     image: mysql:9-oracle
     ports:
@@ -27,12 +28,32 @@ services:
     networks:
       - springboot-mysql-network
     healthcheck:
-      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       retries: 10
       interval: 3s
       timeout: 30s
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    ports:
+      - 8081:8080
+      - 50000:50000
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - springboot-mysql-network
+    environment:
+      - JAVA_OPTS=-Djenkins.install.runSetupWizard=false
+    depends_on:
+      - app
+      - mysqldb
+
 volumes:
   mysql-data:
+  jenkins_home:
+
 networks:
   springboot-mysql-network:
     name: springboot-mysql-network
