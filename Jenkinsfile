@@ -4,7 +4,7 @@ pipeline {
     environment {
         RENDER_API_KEY = credentials('RENDER_API_KEY') // Sử dụng credentials cho API key của Render
         RENDER_SERVICE_ID = 'srv-csavl8ggph6c73a72eeg/deploys/dep-csavl8ogph6c73a72eig' // ID của dịch vụ trên Render
-        DOCKER_IMAGE_NAME = 'spring-quiz-app' // Tên Docker image
+        DOCKER_IMAGE_NAME = 'tungpham286/spring-quiz-app' // Tên Docker image
     }
 
     stages {
