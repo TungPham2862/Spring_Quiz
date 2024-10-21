@@ -25,8 +25,12 @@ pipeline {
             steps {
                 script {
                     // Đăng nhập vào Docker Hub
-                    sh "echo ${DOCKER_HUB_CREDENTIALS_PSW} | docker login -u ${DOCKER_HUB_CREDENTIALS_USR} --password-stdin"
-
+                    withCredentials([usernamePassword(credentialsId: 'DOCKER_HUB_CREDENTIALS', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')])
+                                        {
+                                            sh '''
+                                                echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+                                            '''
+                                        }
                     // Xây dựng Docker image
                     sh "docker build -t ${DOCKER_IMAGE_NAME} ."
 
