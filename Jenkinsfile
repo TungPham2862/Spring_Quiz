@@ -2,10 +2,10 @@ pipeline {
     agent any
 
     environment {
-        RENDER_API_KEY = credentials('tungpham2862') // Sử dụng credentials cho API key của Render
-        RENDER_SERVICE_ID = 'your-render-service-id' // ID của dịch vụ trên Render
-        DOCKER_HUB_CREDENTIALS = credentials('dockerhub-credentials') // Credentials cho Docker Hub
-        DOCKER_IMAGE_NAME = 'your-docker-image-name' // Tên Docker image
+        RENDER_API_KEY = credentials('API_KEY') // Sử dụng credentials cho API key của Render
+        RENDER_SERVICE_ID = 'srv-csavl8ggph6c73a72eeg/deploys/dep-csavl8ogph6c73a72eig' // ID của dịch vụ trên Render
+        DOCKER_HUB_CREDENTIALS = credentials('dockerhub-credential') // Credentials cho Docker Hub
+        DOCKER_IMAGE_NAME = 'spring-quiz-app' // Tên Docker image
     }
 
     stages {
