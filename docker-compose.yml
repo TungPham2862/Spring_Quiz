@@ -49,7 +49,7 @@ services:
     depends_on:
       - app
       - mysqldb
-
+    privileged: true
 volumes:
   mysql-data:
   jenkins_home:
