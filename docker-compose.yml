@@ -28,13 +28,13 @@ services:
     networks:
       - springboot-mysql-network
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost" ]
       retries: 10
       interval: 3s
       timeout: 30s
 
   jenkins:
-    image: jenkins/jenkins:lts
+    image: my-jenkins-docker
     container_name: jenkins
     ports:
       - 8081:8080
@@ -50,6 +50,19 @@ services:
       - app
       - mysqldb
     privileged: true
+#
+#  docker-dind:
+#    image: docker:20.10-dind
+#    container_name: docker-dind
+#    privileged: true
+#    ports:
+#      - 2375:2375
+#    environment:
+#      - DOCKER_TLS_CERTDIR=""
+#    volumes:
+#      - /var/lib/docker
+#    networks:
+#      - springboot-mysql-network
 
 volumes:
   mysql-data:
