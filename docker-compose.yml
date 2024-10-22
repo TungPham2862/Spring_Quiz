@@ -49,6 +49,7 @@ services:
     depends_on:
       - app
       - mysqldb
+    user: root
     privileged: true
 
 volumes:
