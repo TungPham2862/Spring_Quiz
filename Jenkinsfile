@@ -16,26 +16,26 @@ pipeline {
         stage('Build') {
             steps {
                 // Biên dịch dự án bằng Maven
-                bat 'mvn clean package'
+                sh 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
                 // Chạy unit tests
-                bat 'mvn test'
+                sh 'mvn test'
             }
         }
 
         stage('Deploy to Render') {
             steps {
-                script {
-                    // Gửi yêu cầu đến Render API để triển khai
-                    def response = httpRequest(url: RENDER_API_URL, httpMode: 'POST')
-                    echo "Deployment response: ${response.content}"
-                    if (response.status != 200) {
-                        error "Deployment failed with status: ${response.status}"
-                    }
+                script
+                {
+                     def response = httpRequest(url: RENDER_API_URL, httpMode: 'POST')
+                     echo "Deployment response: ${response.content}"
+                     if (response.status != 200) {
+                     error "Deployment failed with status: ${response.status}"
+                     }
                 }
             }
         }
