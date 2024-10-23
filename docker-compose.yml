@@ -34,7 +34,7 @@ services:
       timeout: 30s
 
   jenkins:
-    image: my-jenkins-docker
+    image: jenkins/jenkins:lts
     container_name: jenkins
     ports:
       - 8081:8080
