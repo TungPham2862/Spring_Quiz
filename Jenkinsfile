@@ -30,11 +30,18 @@ pipeline {
         stage('Deploy to Render') {
             steps {
                 script {
-                    // Gửi yêu cầu đến Render API để triển khai
-                    def response = httpRequest(url: RENDER_API_URL, httpMode: 'POST')
-                    echo "Deployment response: ${response.content}"
-                    if (response.status != 200) {
-                        error "Deployment failed with status: ${response.status}"
+                    // Gửi yêu cầu đến Render API để triển khai bằng curl
+                    def response = bat(script: """
+                        curl -X POST ${RENDER_API_URL} -H "Content-Type: application/json"
+                    """, returnStdout: true).trim()
+
+                    echo "Deployment response: ${response}"
+
+                    // Kiểm tra phản hồi
+                    if (response.contains("error")) { // Thay đổi điều kiện kiểm tra theo nội dung phản hồi thực tế
+                        error "Deployment failed with response: ${response}"
+                    } else {
+                        echo 'Deployment succeeded!'
                     }
                 }
             }
