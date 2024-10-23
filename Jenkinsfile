@@ -2,62 +2,37 @@ pipeline {
     agent any
 
     environment {
-        RENDER_API_KEY = credentials('RENDER_API_KEY') // Sử dụng credentials cho API key của Render
-        RENDER_SERVICE_ID = 'srv-csavl8ggph6c73a72eeg' // ID của dịch vụ trên Render
-        DOCKER_IMAGE_NAME = 'tungpham286/spring-quiz-app' // Tên Docker image
+        RENDER_API_URL = "https://api.render.com/deploy/srv-<srv-csavl8ggph6c73a72eeg>?key=<rnd_Jx3GEScTqvmvauQvIsqR5d9jexWF>" // Thay <SERVICE_ID> và <API_KEY> với thông tin của bạn
     }
 
     stages {
-        stage('Checkout from Git') {
+        stage('Checkout') {
             steps {
-                checkout scm // Lấy mã nguồn từ Git
+                // Lấy mã nguồn từ Git
+                checkout scm
             }
         }
 
         stage('Build') {
             steps {
-                sh 'mvn clean package -DskipTests' // Biên dịch ứng dụng với Maven, bỏ qua kiểm thử
-                sh 'ls target'
+                // Biên dịch dự án bằng Maven
+                sh 'mvn clean package'
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Test') {
             steps {
-                script {
-                    // Đăng nhập vào Docker Hub
-                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD')]) {
-                        sh '''
-                            echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-                        '''
-                    }
-                    // Xây dựng Docker image
-                    sh "docker build -t $DOCKER_IMAGE_NAME ."
-
-                    // Đẩy Docker image lên Docker Hub
-                    sh "docker push $DOCKER_IMAGE_NAME"
-                }
+                // Chạy unit tests
+                sh 'mvn test'
             }
         }
 
         stage('Deploy to Render') {
             steps {
                 script {
-                    // Gửi yêu cầu tới API của Render để triển khai
-                    sh """
-                    curl -X POST https://api.render.com/v1/services/$RENDER_SERVICE_ID/deploys \
-                    -H "Authorization: Bearer $RENDER_API_KEY" \
-                    -H "Content-Type: application/json" \
-                    -d '{"branch": "deploy"}'
-                    """
-                }
-            }
-        }
-
-        stage('Post-Deploy Tests') {
-            steps {
-                script {
-                    // Thực hiện kiểm thử sau khi triển khai
-                    sh "curl -f http://your-app-url.com/health" // Thay đổi URL cho phù hợp
+                    // Gửi yêu cầu đến Render API để triển khai
+                    def response = httpRequest(url: RENDER_API_URL, httpMode: 'POST')
+                    echo "Deployment response: ${response.content}"
                 }
             }
         }
@@ -65,10 +40,10 @@ pipeline {
 
     post {
         success {
-            echo 'Deployment successful!'
+            echo 'Pipeline completed successfully!'
         }
         failure {
-            echo 'Deployment failed!'
+            echo 'Pipeline failed!'
         }
     }
 }
