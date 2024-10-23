@@ -16,7 +16,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI defineOpenApi() {
         Server server = new Server();
-        server.setUrl("http://localhost:8080");
+        server.setUrl("spring-test-1.onrender.com");
         server.setDescription("Development");
 
         Contact myContact = new Contact();
