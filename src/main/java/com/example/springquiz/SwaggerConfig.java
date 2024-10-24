@@ -28,7 +28,8 @@ public class SwaggerConfig {
                 .version("1.0")
                 .description("This API exposes endpoints to manage employees.")
                 .contact(myContact);
-        return new OpenAPI().info(information).servers(List.of(server))
+        return new OpenAPI().info(information)
+                .servers(List.of(server))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes("bearerAuth",
