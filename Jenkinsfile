@@ -36,15 +36,13 @@ pipeline {
                                 git config --global user.name "${GITHUB_USER}"
                                 git config --global user.email "tungpham2862@gmail.com"
 
-                                git remote remove origin || echo "No origin to remove"
+                                bat 'git checkout deploy || git checkout -b deploy'
 
-                                git remote add origin https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/TungPham2862/Spring_Test.git
 
                                 git add .
-
                                 git commit -m "Deploy new version from Jenkins"
+                                git push https://${GITHUB_TOKEN}@github.com/TungPham2862/Spring_Test.git deploy
 
-                                git push origin deploy
                             '''
                         }
                             // Use Jenkins credentials for secure Git operations
