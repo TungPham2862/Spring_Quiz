@@ -38,7 +38,7 @@ pipeline {
 
                                 git remote remove origin || echo "No origin to remove"
 
-                                git remote add origin https://{GITHUB_TOKEN}@github.com/TungPham2862/Spring_Test.git
+                                git remote add origin https://${GITHUB_TOKEN}@github.com/TungPham2862/Spring_Test.git
 
                                 git add .
 
