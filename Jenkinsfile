@@ -32,11 +32,11 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-access-token', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
                         bat '''
-                            git config --global user.name "${GITHUB_USER}"
-                            git config --global user.email "your_email@example.com"
+                            git config --global user.name "TungPham2862"
+                            git config --global user.email "tungpham2862@gmail.com"
                             git add .
                             git commit -m "Deploy new version from Jenkins"
-                            git push https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/TungPham2862/Spring_Test.git deploy
+                            git push https://TungPham2862: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@github.com/TungPham2862/Spring_Test.git deploy
                         '''
                     }
                 }
