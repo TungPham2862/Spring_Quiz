@@ -41,7 +41,7 @@ pipeline {
 
                                 git add .
                                 git commit -m "Deploy new version from Jenkins"
-                                git push https://${GITHUB_TOKEN}@github.com/TungPham2862/Spring_Test.git deploy
+                                git push https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/TungPham2862/Spring_Test.git deploy
 
                             '''
                         }
