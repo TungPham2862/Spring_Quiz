@@ -33,17 +33,13 @@ pipeline {
         stage('Build and Commit') {
                     steps {
                         script {
-                            bat '''
-                                git config --global user.name "${GITHUB_USER}"
-                                git config --global user.email "tungpham2862@gmail.com"
-
-                                git checkout deploy || git checkout -b deploy
-
-                                git add .
-                                git commit -m "Deploy new version from Jenkins"
-                                git push https://${GITHUB_TOKEN}@github.com/TungPham2862/Spring_Test.git deploy
-
-                            '''
+                        withCredentials([gitUsernamePassword(credentialsId: 'github-access-token', gitToolName: 'Default')]) {
+                        bat '''
+                             git add .
+                             git commit -m "Deploy new version from Jenkins"
+                             bat "git push -u origin deploy"
+                        '''
+                        }
                         }
                     }
                 }
