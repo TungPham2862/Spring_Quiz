@@ -35,7 +35,7 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.getAllQuestions());
     }
 
-    @GetMapping("/quizs/{quizId}")
+    @GetMapping("/quiz/{quizId}")
     public ResponseEntity<?> getQuestionsByQuizId(@PathVariable int quizId) {
         return ResponseEntity.ok(questionService.getAllQuestionsByQuizId(quizId));
     }
