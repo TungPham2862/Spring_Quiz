@@ -27,21 +27,24 @@ pipeline {
             }
         }
 
-        stage('Push to GitHub') {
-            steps {
-                script {
-                    withCredentials([usernamePassword(credentialsId: 'github-access-token', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
-                        bat '''
-                            git config --global user.name "TungPham2862"
-                            git config --global user.email "tungpham2862@gmail.com"
-                            git add .
-                            git commit -m "Deploy new version from Jenkins"
-                            git push https://TungPham2862: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@github.com/TungPham2862/Spring_Test.git deploy
-                        '''
+        //TungPham2862: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
+        stage('Build and Commit') {
+                    steps {
+                        script {
+                            // Use Jenkins credentials for secure Git operations
+                            withCredentials([usernamePassword(credentialsId: GIT_CREDENTIALS_ID, usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
+                                bat '''
+                                    git config --global user.name "TungPham2862"
+                                    git config --global user.email "tungpham2862@gmail.com"
+                                    git checkout deploy || git checkout -b deploy  // Create/switch to the 'deploy' branch
+                                    git add .
+                                    git commit -m "Deploy new version from Jenkins"
+                                    git push https://TungPham2862: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@github.com/TungPham2862/Spring_Test.git deploy
+                                '''
+                            }
+                        }
                     }
                 }
-            }
-        }
 
         stage('Deploy to Render') {
             steps {
