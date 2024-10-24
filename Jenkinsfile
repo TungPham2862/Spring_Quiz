@@ -35,10 +35,24 @@ pipeline {
                         script {
                         withCredentials([gitUsernamePassword(credentialsId: 'github-access-token', gitToolName: 'Default')]) {
                         bat '''
-                             git add .
-                             git commit -m "Deploy new version from Jenkins"
-                             git push -u origin deploy
-                        '''
+                                                    git config --global user.name "TungPham2862"
+                                                    git config --global user.email "tungpham2862@gmail.com"
+                                                '''
+
+                                                // Fetch remote changes
+                                                bat 'git fetch origin'
+
+                                                // Merge remote changes from deploy branch
+                                                bat 'git merge origin/deploy || true'
+
+                                                // Add changes and commit
+                                                bat '''
+                                                    git add .
+                                                    git commit -m "Deploy new version from Jenkins"
+                                                '''
+
+                                                // Push changes to the remote deploy branch
+                                                bat 'git push -u origin deploy'
                         }
                         }
                     }
