@@ -31,21 +31,24 @@ pipeline {
         stage('Build and Commit') {
                     steps {
                         script {
-                            // Use Jenkins credentials for secure Git operations
+                        withCredentials([usernamePassword(credentialsId: 'github-access-token', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
                             bat '''
-                                git config --global user.name "TungPham2862"
+                                git config --global user.name "${GITHUB_USER}"
                                 git config --global user.email "tungpham2862@gmail.com"
+
+                                git remote remove origin || echo "No origin to remove"
+
+                                git remote add origin https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/${GITHUB_USER}/Spring_Test.git
 
                                 git add .
 
                                 git commit -m "Deploy new version from Jenkins"
 
-                                git remote remove origin || echo "No origin to remove"
-
-                                git remote add origin https://TungPham2862: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@github.com/TungPham2862/Spring_Test.git
-
                                 git push origin deploy
                             '''
+                        }
+                            // Use Jenkins credentials for secure Git operations
+
                         }
                     }
                 }
