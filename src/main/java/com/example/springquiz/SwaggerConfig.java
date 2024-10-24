@@ -16,11 +16,11 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI defineOpenApi() {
         Server server = new Server();
-        server.setUrl("https://spring-test-1.onrender.com");
-        server.setDescription("Deve");
+        server.setUrl("https://spring-quiz-app.onrender.com");
+        server.setDescription("Development");
 
         Contact myContact = new Contact();
-        myContact.setName("TungPahm");
+        myContact.setName("TungPham");
         myContact.setEmail("tungpham2862@gmail.com");
 
         Info information = new Info()
