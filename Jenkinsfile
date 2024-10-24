@@ -32,12 +32,8 @@ pipeline {
         stage('Build Docker Image') {
                     steps {
                         script {
-
-                            def imageName = 'tungpham286/spring-quiz-app'
-                            def imageTag = 'latest' // You can use a version tag or a timestamp here
-
                             // Build Docker image
-                            bat "docker build -t ${imageName}:${imageTag} ."
+                            bat "docker build -t tungpham286/spring-quiz-app ."
                         }
                     }
                 }
@@ -50,7 +46,7 @@ pipeline {
                                 bat "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
 
                                 // Push the Docker image
-                                bat "docker push ${imageName}:${imageTag}"
+                                bat "docker push tungpham286/spring-quiz-app"
                             }
                         }
                     }
