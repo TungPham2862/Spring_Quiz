@@ -44,7 +44,7 @@ pipeline {
 
                                 git commit -m "Deploy new version from Jenkins"
 
-                                git push deploy
+                                git push origin deploy
                             '''
                         }
                             // Use Jenkins credentials for secure Git operations
