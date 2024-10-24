@@ -27,6 +27,22 @@ pipeline {
             }
         }
 
+        stage('Push to GitHub') {
+            steps {
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'github-access-token', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
+                        bat '''
+                            git config --global user.name "${GITHUB_USER}"
+                            git config --global user.email "your_email@example.com"
+                            git add .
+                            git commit -m "Deploy new version from Jenkins"
+                            git push https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/TungPham2862/Spring_Test.git deploy
+                        '''
+                    }
+                }
+            }
+        }
+
         stage('Deploy to Render') {
             steps {
                 script {
