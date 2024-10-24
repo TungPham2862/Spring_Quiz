@@ -29,23 +29,49 @@ pipeline {
             }
         }
 
-
-        stage('Build and Commit') {
+        stage('Build Docker Image') {
                     steps {
                         script {
-                        withCredentials([gitUsernamePassword(credentialsId: 'github-access-token', gitToolName: 'Default')]) {
-                        bat '''
-                            git pull --rebase origin deploy
-                            git add .
-                            git commit -m "Deploy new version from Jenkins"
-                            git push -u origin deploy
-                        '''
 
+                            def imageName = 'tungpham286/spring-quiz-app'
+                            def imageTag = 'latest' // You can use a version tag or a timestamp here
 
-                        }
+                            // Build Docker image
+                            bat "docker build -t ${imageName}:${imageTag} ."
                         }
                     }
                 }
+
+                stage('Push Docker Image') {
+                    steps {
+                        script {
+                            // Login to Docker Hub
+                            withCredentials([usernamePassword(credentialsId: 'dockerhub-credential', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                                bat "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
+
+                                // Push the Docker image
+                                bat "docker push ${imageName}:${imageTag}"
+                            }
+                        }
+                    }
+                }
+
+//         stage('Build and Commit') {
+//                     steps {
+//                         script {
+//                         withCredentials([gitUsernamePassword(credentialsId: 'github-access-token', gitToolName: 'Default')]) {
+//                         bat '''
+//                             git pull --rebase origin deploy
+//                             git add .
+//                             git commit -m "Deploy new version from Jenkins"
+//                             git push -u origin deploy
+//                         '''
+//
+//
+//                         }
+//                         }
+//                     }
+//                 }
 
         stage('Deploy to Render') {
             steps {
