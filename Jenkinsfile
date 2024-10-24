@@ -16,14 +16,14 @@ pipeline {
         stage('Build') {
             steps {
                 // Biên dịch dự án bằng Maven
-                bat 'mvn clean package'
+                powershell 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
                 // Chạy unit tests
-                bat 'mvn test'
+                powershell 'mvn test'
             }
         }
 
@@ -32,12 +32,11 @@ pipeline {
                     steps {
                         script {
                         withCredentials([usernamePassword(credentialsId: 'github-access-token', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
-                            bat '''
+                            powershell '''
                                 git config --global user.name "${GITHUB_USER}"
                                 git config --global user.email "tungpham2862@gmail.com"
 
                                 bat 'git checkout deploy || git checkout -b deploy'
-
 
                                 git add .
                                 git commit -m "Deploy new version from Jenkins"
