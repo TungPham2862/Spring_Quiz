@@ -27,7 +27,7 @@ pipeline {
             }
         }
 
-        //TungPham2862:Nn702YFt93tI6lt_ghp_B6oV3niko3SmEgW8mhr94
+
         stage('Build and Commit') {
                     steps {
                         script {
