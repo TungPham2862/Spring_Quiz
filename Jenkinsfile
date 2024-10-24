@@ -27,7 +27,7 @@ pipeline {
             }
         }
 
-        //TungPham2862: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
+        //TungPham2862:B6oV3niko3SmEgW8mhr94Nn702YFt93tI6lt_ghp_
         stage('Build and Commit') {
                     steps {
                         script {
