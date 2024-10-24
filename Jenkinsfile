@@ -36,7 +36,7 @@ pipeline {
                                 git config --global user.name "${GITHUB_USER}"
                                 git config --global user.email "tungpham2862@gmail.com"
 
-                                bat 'git checkout deploy || git checkout -b deploy'
+                                git checkout deploy || git checkout -b deploy
 
                                 git add .
                                 git commit -m "Deploy new version from Jenkins"
