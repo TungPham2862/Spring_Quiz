@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        RENDER_API_URL = "https://api.render.com/deploy/srv-<srv-csavl8ggph6c73a72eeg>?key=<rnd_Jx3GEScTqvmvauQvIsqR5d9jexWF>" // Thay <SERVICE_ID> và <API_KEY> với thông tin của bạn
+        RENDER_API_URL = "https://api.render.com/deploy/srv-csc9os8gph6c73bov4h0?key=td5OIBZfhCM" // Thay <SERVICE_ID> và <API_KEY> với thông tin của bạn
     }
 
     stages {
@@ -32,7 +32,7 @@ pipeline {
                 script {
                     // Gửi yêu cầu đến Render API để triển khai bằng curl
                     def response = bat(script: """
-                        curl -X POST "https://api.render.com/deploy/srv-<srv-csavl8ggph6c73a72eeg>?key=<rnd_Jx3GEScTqvmvauQvIsqR5d9jexWF>" -H "Content-Type: application/json"
+                        curl -X POST "https://api.render.com/deploy/srv-csc9os8gph6c73bov4h0?key=td5OIBZfhCM" -H "Content-Type: application/json"
                     """, returnStdout: true).trim()
 
                     echo "Deployment response: ${response}"
