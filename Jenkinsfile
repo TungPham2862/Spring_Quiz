@@ -35,10 +35,7 @@ pipeline {
                         script {
                         withCredentials([gitUsernamePassword(credentialsId: 'github-access-token', gitToolName: 'Default')]) {
                         bat '''
-                            git config --global user.name "TungPham2862"
-                            git config --global user.email "tungpham2862@gmail.com"
                             git pull --rebase origin deploy
-
                             git add .
                             git commit -m "Deploy new version from Jenkins"
                             git push -u origin deploy
