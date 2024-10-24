@@ -18,14 +18,14 @@ pipeline {
         stage('Build') {
             steps {
                 // Biên dịch dự án bằng Maven
-                powershell 'mvn clean package'
+                bat 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
                 // Chạy unit tests
-                powershell 'mvn test'
+                bat 'mvn test'
             }
         }
 
@@ -34,10 +34,10 @@ pipeline {
                     steps {
                         script {
                         withCredentials([gitUsernamePassword(credentialsId: 'github-access-token', gitToolName: 'Default')]) {
-                        powershell '''
+                        bat '''
                              git add .
                              git commit -m "Deploy new version from Jenkins"
-                             bat "git push -u origin deploy"
+                             git push -u origin deploy
                         '''
                         }
                         }
@@ -48,7 +48,7 @@ pipeline {
             steps {
                 script {
                     // Gửi yêu cầu đến Render API để triển khai bằng curl
-                    def response = powershell(script: """
+                    def response = bat(script: """
                         curl -X POST "https://api.render.com/deploy/srv-csc9os8gph6c73bov4h0?key=td5OIBZfhCM" -H "Content-Type: application/json"
                     """, returnStdout: true).trim()
 
