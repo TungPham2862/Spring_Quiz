@@ -27,7 +27,7 @@ pipeline {
             }
         }
 
-        //TungPham2862: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
+        //TungPham2862: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
         stage('Build and Commit') {
                     steps {
                         script {
@@ -38,7 +38,7 @@ pipeline {
                                 git checkout deploy || git checkout -b deploy  // Create/switch to the 'deploy' branch
                                 git add .
                                 git commit -m "Deploy new version from Jenkins"
-                                git push https://TungPham2862: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@github.com/TungPham2862/Spring_Test.git deploy
+                                git push https://TungPham2862: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@github.com/TungPham2862/Spring_Test.git deploy
                             '''
                         }
                     }
