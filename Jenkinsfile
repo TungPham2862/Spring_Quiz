@@ -3,6 +3,8 @@ pipeline {
 
     environment {
         RENDER_API_URL = "https://api.render.com/deploy/srv-csc9os8gph6c73bov4h0?key=td5OIBZfhCM" // Thay <SERVICE_ID> và <API_KEY> với thông tin của bạn
+        GITHUB_USER = 'TungPham2862'
+        GITHUB_TOKEN = credentials('github-access-token')
     }
 
     stages {
@@ -31,7 +33,6 @@ pipeline {
         stage('Build and Commit') {
                     steps {
                         script {
-                        withCredentials([usernamePassword(credentialsId: 'github-access-token', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
                             bat '''
                                 git config --global user.name "${GITHUB_USER}"
                                 git config --global user.email "tungpham2862@gmail.com"
@@ -43,9 +44,6 @@ pipeline {
                                 git push https://${GITHUB_USER}:${GITHUB_TOKEN}@github.com/TungPham2862/Spring_Test.git deploy
 
                             '''
-                        }
-                            // Use Jenkins credentials for secure Git operations
-
                         }
                     }
                 }
