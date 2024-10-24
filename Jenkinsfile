@@ -16,14 +16,14 @@ pipeline {
         stage('Build') {
             steps {
                 // Biên dịch dự án bằng Maven
-                powershell 'mvn clean package'
+                bat 'mvn clean package'
             }
         }
 
         stage('Test') {
             steps {
                 // Chạy unit tests
-                powershell 'mvn test'
+                bat 'mvn test'
             }
         }
 
@@ -32,7 +32,7 @@ pipeline {
                     steps {
                         script {
                         withCredentials([usernamePassword(credentialsId: 'github-access-token', usernameVariable: 'GITHUB_USER', passwordVariable: 'GITHUB_TOKEN')]) {
-                            powershell '''
+                            bat '''
                                 git config --global user.name "${GITHUB_USER}"
                                 git config --global user.email "tungpham2862@gmail.com"
 
