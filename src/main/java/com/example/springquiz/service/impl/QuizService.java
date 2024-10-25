@@ -1,14 +1,13 @@
 package com.example.springquiz.service.impl;
 
 import com.example.springquiz.builder.QuizBuilder;
-import com.example.springquiz.exception.CustomizedNotFoundException;
+import com.example.springquiz.enumeration.ErrorCode;
+import com.example.springquiz.exception.CustomizedRuntimeException;
 import com.example.springquiz.model.domain.Quiz;
 import com.example.springquiz.model.dto.QuizDTO;
 import com.example.springquiz.repository.IQuizRepository;
 import com.example.springquiz.service.IQuizService;
-import com.github.javafaker.Faker;
 import lombok.AllArgsConstructor;
-import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
@@ -46,7 +45,7 @@ public class QuizService implements IQuizService {
     public Optional<QuizDTO> getQuizById(int id) {
         return quizRepository.findById(id)
                 .map(quizBuilder::build)
-                .orElseThrow(() -> new CustomizedNotFoundException(String.format("Quiz with id %s not found", id)));
+                .orElseThrow(() -> new CustomizedRuntimeException(ErrorCode.QUIZ_NOT_FOUND));
     }
 
     @Override
@@ -55,11 +54,14 @@ public class QuizService implements IQuizService {
                 .map(model -> quizBuilder.build(dto,model))
                 .map(quizRepository::save)
                 .map(quizBuilder::build)
-                .orElseThrow(()-> new CustomizedNotFoundException(String.format("Quiz with id %s not found", id)));
+                .orElseThrow(()-> new CustomizedRuntimeException(ErrorCode.QUIZ_NOT_FOUND));
     }
 
     @Override
     public void deleteQuizById(int id) {
+        if (quizRepository.findById(id).isEmpty()) {
+            throw new CustomizedRuntimeException(ErrorCode.QUIZ_NOT_FOUND);
+        }
         quizRepository.deleteById(id);
     }
 
