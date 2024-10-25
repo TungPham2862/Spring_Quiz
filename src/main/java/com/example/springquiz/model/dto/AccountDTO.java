@@ -12,23 +12,23 @@ import java.util.Date;
 @AllArgsConstructor
 public class AccountDTO {
 
-    @Pattern(regexp = "^[a-zA-Z0-9._]{3,16}$",message = "Invalid username")
+    @Pattern(regexp = "^[a-zA-Z0-9._]{3,16}$",message = "INVALID_USERNAME")
     @Schema(description = "The name of the user", example = "john_doe", defaultValue = "john_doe")
     private String username;
 
-    @Pattern(regexp = "^[a-zA-Z0-9._]{3,16}$",message = "Invalid password")
+    @Pattern(regexp = "^[a-zA-Z0-9._]{3,16}$",message = "INVALID_PASSWORD")
     @Schema(description = "The password of the user", example = "123456", defaultValue = "123456")
     private String password;
 
-    @Pattern(regexp = "^[A-Za-z\\s]{3,16}$",message = "Invalid fullName")
+    @Pattern(regexp = "^[A-Za-z\\s]{3,16}$",message = "INVALID_FULLNAME")
     @Schema(description = "The fullName of the user", example = "John Doe", defaultValue = "John Doe")
     private String fullName;
 
-    @Pattern(regexp = "^[a-z]+\\w+@([\\w-]+\\.)+[\\w-]{2,4}$",message = "Invalid Email")
+    @Pattern(regexp = "^[a-z]+\\w+@([\\w-]+\\.)+[\\w-]{2,4}$",message = "INVALID_EMAIL")
     @Schema(description = "The email of the user", example = "johndoe123@gmail.com", defaultValue = "johndoe123@gmail.com")
     private String email;
 
-    @Pattern(regexp = "^\\d{8,12}$", message = "Invalid phone number")
+    @Pattern(regexp = "^\\d{8,12}$", message = "INVALID_PHONE_NUMBER")
     @Schema(description = "The phone of the user", example = "0988454005", defaultValue = "0988454005")
     private String phone;
 
