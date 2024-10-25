@@ -35,7 +35,7 @@ public class AuthenticationService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         boolean result = account.isPresent() && passwordEncoder.matches(authenRequestDTO.getPassword(), account.get().getPassword());
-        if (!result) throw new CustomizedRuntimeException(ErrorCode.WRONG_CREDENTIALS);
+        if (!result) throw new CustomizedRuntimeException(ErrorCode.UNAUTHENTICATED);
         String token = generateToken(account.get().getUsername());
         return AuthenResponseDTO.builder()
                 .token(token)
