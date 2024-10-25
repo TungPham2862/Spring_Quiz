@@ -1,5 +1,7 @@
 package com.example.springquiz.service.impl;
 
+import com.example.springquiz.enumeration.ErrorCode;
+import com.example.springquiz.exception.CustomizedRuntimeException;
 import com.example.springquiz.model.domain.Account;
 import com.example.springquiz.model.dto.AuthenRequestDTO;
 import com.example.springquiz.model.dto.AuthenResponseDTO;
@@ -33,7 +35,7 @@ public class AuthenticationService {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
         boolean result = account.isPresent() && passwordEncoder.matches(authenRequestDTO.getPassword(), account.get().getPassword());
-        if (!result) throw new RuntimeException("Invalid username or password");
+        if (!result) throw new CustomizedRuntimeException(ErrorCode.WRONG_CREDENTIALS);
         String token = generateToken(account.get().getUsername());
         return AuthenResponseDTO.builder()
                 .token(token)
