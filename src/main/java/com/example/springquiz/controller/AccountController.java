@@ -36,7 +36,7 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getAllAccounts());
     }
 
-    @GetMapping("/role/{roleId}")
+    @GetMapping("/roless/{roleId}")
     public ResponseEntity<?> findAccountsByRoleId(@PathVariable int roleId) {
         return ResponseEntity.ok(accountService.getAccountsByRoleId(roleId));
     }
