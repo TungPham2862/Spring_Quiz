@@ -16,7 +16,7 @@ public class SwaggerConfig {
     @Bean
     public OpenAPI defineOpenApi() {
         Server server = new Server();
-        server.setUrl("http://localhost:8080");
+        server.setUrl("https://spring-quiz-app.onrender.com");
         server.setDescription("Development");
 
         Contact myContact = new Contact();
@@ -28,7 +28,8 @@ public class SwaggerConfig {
                 .version("1.0")
                 .description("This API exposes endpoints to manage employees.")
                 .contact(myContact);
-        return new OpenAPI().info(information).servers(List.of(server))
+        return new OpenAPI().info(information)
+                .servers(List.of(server))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new io.swagger.v3.oas.models.Components()
                         .addSecuritySchemes("bearerAuth",
