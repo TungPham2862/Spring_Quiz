@@ -1,5 +1,6 @@
 package com.example.springquiz.config;
 
+import com.example.springquiz.exception.MyAuthenticationEntryPoint;
 import com.example.springquiz.model.domain.Role;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -64,6 +65,9 @@ public class SecurityConfig {
                 .cors(Customizer.withDefaults())
                 .oauth2ResourceServer(oauth2ResourceServer ->
                 oauth2ResourceServer.jwt(jwtConfigurer -> jwtConfigurer.decoder(jwtDecoder())));
+
+//        httpSecurity.exceptionHandling(exceptionHandler ->
+//                exceptionHandler.authenticationEntryPoint(new MyAuthenticationEntryPoint()));
 
         return httpSecurity.build();
     }

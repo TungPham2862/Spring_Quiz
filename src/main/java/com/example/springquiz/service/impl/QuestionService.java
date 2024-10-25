@@ -1,10 +1,12 @@
 package com.example.springquiz.service.impl;
 
 import com.example.springquiz.builder.QuestionBuilder;
-import com.example.springquiz.exception.CustomizedNotFoundException;
+import com.example.springquiz.enumeration.ErrorCode;
+import com.example.springquiz.exception.CustomizedRuntimeException;
 import com.example.springquiz.model.domain.Question;
 import com.example.springquiz.model.dto.QuestionDTO;
 import com.example.springquiz.repository.IQuestionRepository;
+import com.example.springquiz.repository.IQuizRepository;
 import com.example.springquiz.service.IQuestionService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,7 @@ import java.util.stream.Stream;
 public class QuestionService implements IQuestionService {
     private final IQuestionRepository questionRepository;
     private final QuestionBuilder questionBuilder;
+    private final IQuizRepository quizRepository;
 
 
     @Override
@@ -41,6 +44,9 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public List<Optional<QuestionDTO>> getAllQuestionsByQuizId(int quizId) {
+        if(quizRepository.findById(quizId).isEmpty()){
+            throw new CustomizedRuntimeException(ErrorCode.QUIZ_NOT_FOUND);
+        }
         return questionRepository.findAllByQuizzes_QuizId(quizId)
                 .stream()
                 .map(questionBuilder::build)
@@ -51,7 +57,7 @@ public class QuestionService implements IQuestionService {
     public Optional<QuestionDTO> getQuestionById(int id) {
         return questionRepository.findById(id)
                 .map(questionBuilder::build)
-                .orElseThrow(() -> new CustomizedNotFoundException(String.format("No such Question for id '%s'", id)));
+                .orElseThrow(() -> new CustomizedRuntimeException(ErrorCode.QUESTION_NOT_FOUND));
     }
 
     @Override
@@ -60,12 +66,15 @@ public class QuestionService implements IQuestionService {
                 .map(model -> questionBuilder.build(dto, model))
                 .map(questionRepository::save)
                 .map(questionBuilder::build)
-                .orElseThrow(() -> new CustomizedNotFoundException(String.format("No such Question for id '%s'", id)));
+                .orElseThrow(() -> new CustomizedRuntimeException(ErrorCode.QUESTION_NOT_FOUND));
 
     }
 
     @Override
     public void deleteQuestionById(int id) {
+        if (questionRepository.findById(id).isEmpty()) {
+            throw new CustomizedRuntimeException(ErrorCode.QUESTION_NOT_FOUND);
+        }
         questionRepository.deleteById(id);
     }
 
