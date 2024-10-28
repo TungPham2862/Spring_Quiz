@@ -50,12 +50,12 @@ public class AuthenticationService {
                 .subject(username)
                 .issuer("admin1")
                 .issueTime(new Date())
-                .expirationTime(new Date(System.currentTimeMillis()+ 1000 * 60 * 60))
-                .claim("scope",account.getRole().getRoleName())
+                .expirationTime(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
+                .claim("scope", account.getRole().getRoleName())
                 .build();
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
-        JWSObject jwsObject = new JWSObject(header,payload);
-        try{
+        JWSObject jwsObject = new JWSObject(header, payload);
+        try {
             jwsObject.sign(new MACSigner(encryptionKey.getBytes()));
             return jwsObject.serialize();
         } catch (JOSEException e) {

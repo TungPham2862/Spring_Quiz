@@ -16,6 +16,7 @@ import java.util.Optional;
 public class AccountBuilder {
 
     private final ModelMapper modelMapper;
+
     public Account build(AccountDTO dto) {
         Account model = modelMapper.map(dto, Account.class);
         return model;

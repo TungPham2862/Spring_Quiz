@@ -14,7 +14,7 @@ public class WebConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:8080","https://spring-quiz-app.onrender.com") // Adjust for your Swagger UI host
+                        .allowedOrigins("http://localhost:8080", "https://spring-quiz-app.onrender.com") // Adjust for your Swagger UI host
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);
