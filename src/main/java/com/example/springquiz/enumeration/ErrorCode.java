@@ -22,13 +22,13 @@ public enum ErrorCode {
     UNAUTHENTICATED(1010, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(1011, "Unauthorized", HttpStatus.FORBIDDEN),
 
-    INVALID_USERNAME(1011,"Invalid username", HttpStatus.BAD_REQUEST),
-    INVALID_PASSWORD(1012,"Invalid password", HttpStatus.BAD_REQUEST),
-    INVALID_FULLNAME(1013,"Invalid full name", HttpStatus.BAD_REQUEST),
-    INVALID_EMAIL(1014,"Invalid email address", HttpStatus.BAD_REQUEST),
-    INVALID_PHONE_NUMBER(1015,"Invalid phone number", HttpStatus.BAD_REQUEST),
+    INVALID_USERNAME(1011, "Invalid username", HttpStatus.BAD_REQUEST),
+    INVALID_PASSWORD(1012, "Invalid password", HttpStatus.BAD_REQUEST),
+    INVALID_FULLNAME(1013, "Invalid full name", HttpStatus.BAD_REQUEST),
+    INVALID_EMAIL(1014, "Invalid email address", HttpStatus.BAD_REQUEST),
+    INVALID_PHONE_NUMBER(1015, "Invalid phone number", HttpStatus.BAD_REQUEST),
 
-    UNCATEGORIZED_EX(1999,"Uncategorized exception!",HttpStatus.INTERNAL_SERVER_ERROR);
+    UNCATEGORIZED_EX(1999, "Uncategorized exception!", HttpStatus.INTERNAL_SERVER_ERROR);
 
     private int code;
     private String message;

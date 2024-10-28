@@ -14,6 +14,7 @@ import java.util.Optional;
 public class RoleBuilder {
 
     private final ModelMapper modelMapper;
+
     public Role build(RoleDTO dto) {
         Role model = modelMapper.map(dto, Role.class);
         return model;

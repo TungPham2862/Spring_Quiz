@@ -44,7 +44,7 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public List<Optional<QuestionDTO>> getAllQuestionsByQuizId(int quizId) {
-        if(quizRepository.findById(quizId).isEmpty()){
+        if (quizRepository.findById(quizId).isEmpty()) {
             throw new CustomizedRuntimeException(ErrorCode.QUIZ_NOT_FOUND);
         }
         return questionRepository.findAllByQuizzes_QuizId(quizId)

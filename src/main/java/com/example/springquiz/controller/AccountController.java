@@ -45,6 +45,7 @@ public class AccountController {
     public ResponseEntity<?> findAccountById(@PathVariable int id) {
         return ResponseEntity.ok(accountService.getAccountById(id));
     }
+
     @GetMapping("/profile")
     public ResponseEntity<?> getCurrentProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

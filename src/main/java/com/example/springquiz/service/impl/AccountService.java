@@ -30,7 +30,7 @@ public class AccountService implements IAccountService {
 
     @Override
     public int createNewAccount(AccountDTO dto) {
-        if(accountRepository.findByUsername(dto.getUsername()).isPresent()){
+        if (accountRepository.findByUsername(dto.getUsername()).isPresent()) {
             throw new CustomizedRuntimeException(ErrorCode.USER_EXISTED);
         }
         Role role = roleRepository.findByRoleName(dto.getRoleName());
@@ -74,7 +74,7 @@ public class AccountService implements IAccountService {
     @Override
     public Optional<AccountDTO> updateAccount(int id, AccountDTO dto) {
         return accountRepository.findById(id)
-                .map(model -> accountBuilder.build(dto,model))
+                .map(model -> accountBuilder.build(dto, model))
                 .map(accountRepository::save)
                 .map(accountBuilder::build)
                 .orElseThrow(() -> new CustomizedRuntimeException(ErrorCode.USER_NOT_FOUND));
@@ -86,7 +86,7 @@ public class AccountService implements IAccountService {
         String status = dto.getStatus().equals("Active") ? "Inactive" : "Active";
         dto.setStatus(status);
         accountRepository.findById(id)
-                .map(model -> accountBuilder.build(dto,model))
+                .map(model -> accountBuilder.build(dto, model))
                 .map(accountRepository::save)
                 .orElseThrow(() -> new CustomizedRuntimeException(ErrorCode.USER_NOT_FOUND));
     }
