@@ -26,9 +26,9 @@ public class Quiz {
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-            name="quiz_question",
-            joinColumns = @JoinColumn(name="quiz_id"),
-            inverseJoinColumns = @JoinColumn(name="question_id")
+            name = "quiz_question",
+            joinColumns = @JoinColumn(name = "quiz_id"),
+            inverseJoinColumns = @JoinColumn(name = "question_id")
     )
     private Set<Question> questions;
 

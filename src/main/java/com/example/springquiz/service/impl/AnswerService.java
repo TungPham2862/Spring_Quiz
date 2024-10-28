@@ -46,7 +46,7 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public List<Optional<AnswerDTO>> getAnswersByQuestionId(int questionId) {
-        if(questionRepository.findById(questionId).isEmpty()) {
+        if (questionRepository.findById(questionId).isEmpty()) {
             throw new CustomizedRuntimeException(ErrorCode.QUESTION_NOT_FOUND);
         }
         return answerRepository.findByQuestion_QuestionId(questionId)
@@ -66,13 +66,11 @@ public class AnswerService implements IAnswerService {
 
     @Override
     public void deleteAnswerById(int id) {
-        if(answerRepository.findById(id).isEmpty()) {
+        if (answerRepository.findById(id).isEmpty()) {
             throw new CustomizedRuntimeException(ErrorCode.ANSWER_NOT_FOUND);
         }
         answerRepository.deleteById(id);
     }
-
-
 
 
     @Override

@@ -34,7 +34,7 @@ public class QuizBuilder {
                 .collect(Collectors.toSet());
         QuizDTO dto = modelMapper.map(domain, QuizDTO.class);
         dto.setQuestions(questions);
-        if(domain.getAccount()!=null) dto.setAccountId(domain.getAccount().getAccountId());
+        if (domain.getAccount() != null) dto.setAccountId(domain.getAccount().getAccountId());
         return Optional.of(dto);
     }
 

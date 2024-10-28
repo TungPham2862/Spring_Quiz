@@ -8,5 +8,6 @@ import java.util.Optional;
 
 public interface IAccountRepository extends JpaRepository<Account, Integer> {
     List<Account> findAllByRole_roleId(Integer roleId);
+
     Optional<Account> findByUsername(String username);
 }

@@ -51,10 +51,10 @@ public class QuizService implements IQuizService {
     @Override
     public Optional<QuizDTO> updateQuiz(int id, QuizDTO dto) {
         return quizRepository.findById(id)
-                .map(model -> quizBuilder.build(dto,model))
+                .map(model -> quizBuilder.build(dto, model))
                 .map(quizRepository::save)
                 .map(quizBuilder::build)
-                .orElseThrow(()-> new CustomizedRuntimeException(ErrorCode.QUIZ_NOT_FOUND));
+                .orElseThrow(() -> new CustomizedRuntimeException(ErrorCode.QUIZ_NOT_FOUND));
     }
 
     @Override
